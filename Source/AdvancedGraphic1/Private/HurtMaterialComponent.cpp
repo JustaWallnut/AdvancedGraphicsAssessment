@@ -28,13 +28,16 @@ void UHurtMaterialComponent::BeginPlay()
 				UMaterialInstanceDynamic* NewMID = UMaterialInstanceDynamic::Create(TargetMaterial, this);
 				TargetMeshComponent->SetMaterial(TargetMaterialIndex, NewMID);
 				DynamicMaterial = NewMID;
-				if (HurtColorParam != NAME_None)
+				if (EnableHurtEffect)
 				{
-					DynamicMaterial->SetVectorParameterValue(HurtColorParam, HurtColor);
-				}
-				if (DurationParam != NAME_None)
-				{
-					DynamicMaterial->SetScalarParameterValue(DurationParam, FadeDuration);
+					if (HurtColorParam != NAME_None)
+					{
+						DynamicMaterial->SetVectorParameterValue(HurtColorParam, HurtColor);
+					}
+					if (DurationParam != NAME_None)
+					{
+						DynamicMaterial->SetScalarParameterValue(DurationParam, FadeDuration);
+					}
 				}
 			}
 		}
@@ -55,19 +58,16 @@ void UHurtMaterialComponent::StartHurtLogic()
 		UE_LOG(LogTemp, Warning, TEXT("HurtMaterial fail!"));
 	}
 }
-void UHurtMaterialComponent::StartHurtLogic2(float FProgress)
+void UHurtMaterialComponent::StartDamageStateLogic(float FProgress)
 {
 	if (DynamicMaterial)
 	{
-		float CurrentTime = GetWorld()->GetTimeSeconds();
-		DynamicMaterial->SetScalarParameterValue(StartTimeParam, CurrentTime);
 		DynamicMaterial->SetScalarParameterValue(ProgressParam, FProgress);
-		UE_LOG(LogTemp, Warning, TEXT("HurtMaterial Success!"));
 		UE_LOG(LogTemp, Warning, TEXT("Progress: %f!!!"), FProgress)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HurtMaterial fail!"));
+		UE_LOG(LogTemp, Warning, TEXT("Progress fail!"));
 	}
 }
 

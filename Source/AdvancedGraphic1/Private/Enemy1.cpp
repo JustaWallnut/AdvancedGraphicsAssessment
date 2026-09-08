@@ -39,7 +39,14 @@ void AEnemy1::TakeDamage_Implementation(const float Damage)
 	}
 	else
 	{
-		HurtMaterialComponent->StartHurtLogic2(Health->CurrentHealth / Health->MaxHealth);
+		if (HurtMaterialComponent->EnableHurtEffect)
+		{
+			HurtMaterialComponent->StartHurtLogic();
+		}
+		if (HurtMaterialComponent->EnableDamageStates)
+		{
+			HurtMaterialComponent->StartDamageStateLogic(Health->CurrentHealth / Health->MaxHealth);
+		}
 		UE_LOG(LogTemp, Warning, TEXT("Current my health is: %f!!!"), Health->CurrentHealth)
 	}
 }
