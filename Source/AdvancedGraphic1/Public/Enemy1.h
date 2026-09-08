@@ -8,6 +8,7 @@
 #include "Components/BoxComponent.h"
 #include "AC_HealthComponent.h"
 #include "DamageInterface.h"
+#include "HurtMaterialComponent.h"
 #include "Enemy1.generated.h"
 
 UCLASS()
@@ -32,24 +33,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
+	UHurtMaterialComponent* HurtMaterialComponent;
 	
-	UPROPERTY()
-	UMaterialInstanceDynamic* DynamicMaterial;
-	
-	UPROPERTY(EditDefaultsOnly)
-	FName StartTimeParam;
-	
-	UPROPERTY(EditDefaultsOnly)
-	FName HurtColorParam;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector HurtColor;
-	
-	UPROPERTY(EditDefaultsOnly)
-	FName DurationParam;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float FadeDuration;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
+	UAC_HealthComponent* Health;
 	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
@@ -58,8 +48,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
 	UBoxComponent* BoxCollision;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
-	UAC_HealthComponent* Health;
 };
 
 

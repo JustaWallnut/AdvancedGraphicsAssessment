@@ -19,13 +19,15 @@ AEnemy1::AEnemy1()
 	
 	Health = CreateDefaultSubobject<UAC_HealthComponent>(TEXT("Health"));
 	Health->MaxHealth = StartingHealth;
+	
+	HurtMaterialComponent = CreateDefaultSubobject<UHurtMaterialComponent>(TEXT("HurtMaterialComponent"));
+	HurtMaterialComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
 void AEnemy1::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AEnemy1::TakeDamage_Implementation(const float Damage)
@@ -37,7 +39,8 @@ void AEnemy1::TakeDamage_Implementation(const float Damage)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current my health is: %f!!!"), Health->CurrentHealth);
+		HurtMaterialComponent->StartHurtLogic2(Health->CurrentHealth / Health->MaxHealth);
+		UE_LOG(LogTemp, Warning, TEXT("Current my health is: %f!!!"), Health->CurrentHealth)
 	}
 }
 
