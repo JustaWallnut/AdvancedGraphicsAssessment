@@ -3,3 +3,12 @@
 
 #include "MyHUD.h"
 
+void AMyHUD::BeginPlay()
+{
+	Super::BeginPlay();
+	APlayerController* PC = Cast<APlayerController>(GetOwner());
+	InventoryUI = CreateWidget<UUserWidget>(PC, InventoryWidgetClass);
+	
+	InventoryUI->AddToPlayerScreen();
+}
+

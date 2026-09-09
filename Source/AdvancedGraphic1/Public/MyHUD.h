@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "MyInventoryWidget.h"
 #include "MyHUD.generated.h"
 
 /**
@@ -14,4 +15,12 @@ class ADVANCEDGRAPHIC1_API AMyHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+	public:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UMyInventoryWidget> InventoryWidgetClass;
+	
+	UPROPERTY()
+	TObjectPtr<UUserWidget> InventoryUI;
+	
+	virtual void BeginPlay() override;
 };
