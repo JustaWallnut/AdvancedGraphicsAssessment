@@ -15,12 +15,13 @@ class ADVANCEDGRAPHIC1_API AMyHUD : public AHUD
 {
 	GENERATED_BODY()
 	
-	public:
+public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMyInventoryWidget> InventoryWidgetClass;
 	
 	UPROPERTY()
 	TObjectPtr<UUserWidget> InventoryUI;
 	
+protected:
 	virtual void BeginPlay() override;
 };
