@@ -22,6 +22,6 @@ class ADVANCEDGRAPHIC1_API IPickupInterface
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void CollectOre(UOreType* OreType);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, meta=(ReturnDisplayName = "Success"))
+	bool CollectOre(UOreType* OreType);
 };

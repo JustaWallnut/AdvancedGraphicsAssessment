@@ -19,3 +19,10 @@ void UMyBlueprintFunctionLibrary::DealDamageHitbox(UShapeComponent* TargetCollis
 		}
 	}
 }
+
+FVector2D UMyBlueprintFunctionLibrary::GetRandomPosAlongRadius(float Radius, FVector Origin)
+{
+	float Location2DX = (UKismetMathLibrary::DegCos(UKismetMathLibrary::RandomFloatInRange(0.0f, 360.0f)) * Radius) + Origin.X;
+	float Location2DY = (UKismetMathLibrary::DegSin(UKismetMathLibrary::RandomFloatInRange(0.0f, 360.0f)) * Radius) + Origin.Y;
+	return FVector2D(Location2DX, Location2DY);
+}

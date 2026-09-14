@@ -29,6 +29,13 @@ void ASpawnedOre::BeginPlay()
 {
 	Super::BeginPlay();
 	StaticMeshBody->SetSimulatePhysics(true);
+	if (AssignedOreType)
+	{
+		if (AssignedOreType->OreMesh)
+		{
+			StaticMeshBody->SetStaticMesh(AssignedOreType->OreMesh);
+		}
+	}
 	
 	CollectionHitbox->OnComponentBeginOverlap.AddDynamic(this, &ASpawnedOre::OnOverlapStart);
 }
@@ -43,8 +50,11 @@ void ASpawnedOre::OnOverlapStart(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (OtherActor->Implements<UPickupInterface>())
 	{
-		IPickupInterface::Execute_CollectOre(OtherActor, AssignedOreType);
-		Destroy();
+		if (IPickupInterface::Execute_CollectOre(OtherActor, AssignedOreType))
+		{
+			Destroy();
+		}
+		
 	}
 }
 

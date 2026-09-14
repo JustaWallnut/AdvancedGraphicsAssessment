@@ -9,12 +9,14 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class ADVANCEDGRAPHIC1_API UOreType : public UDataAsset
 {
 	GENERATED_BODY()
 	
 public:
+	UOreType();
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FString OreName;
 	
