@@ -19,7 +19,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMyInventoryWidget> InventoryWidgetClass;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UUserWidget> InventoryUI;
 	
 protected:
