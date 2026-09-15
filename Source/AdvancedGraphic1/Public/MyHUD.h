@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "MyInventoryWidget.h"
+#include "MoneyCounterWidget.h"
 #include "MyHUD.generated.h"
 
 /**
@@ -21,6 +22,12 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UUserWidget> InventoryUI;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UMoneyCounterWidget> MoneyCounterWidgetClass;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UUserWidget> MoneyCounterUI;
 	
 protected:
 	virtual void BeginPlay() override;

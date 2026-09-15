@@ -26,3 +26,18 @@ FVector2D UMyBlueprintFunctionLibrary::GetRandomPosAlongRadius(float Radius, FVe
 	float Location2DY = (UKismetMathLibrary::DegSin(UKismetMathLibrary::RandomFloatInRange(0.0f, 360.0f)) * Radius) + Origin.Y;
 	return FVector2D(Location2DX, Location2DY);
 }
+
+float UMyBlueprintFunctionLibrary::CalculateTotalFromOres (TArray<UOreType*> Ores)
+{
+	float TotalSell = 0.0f;
+	for (UOreType* o : Ores)
+	{
+		TotalSell += o->BaseValue;
+	}
+	return TotalSell;
+}
+
+FString UMyBlueprintFunctionLibrary::ConvertFloatToTwoDecimalsString(float Number)
+{
+	return FString::SanitizeFloat(FMath::TruncToFloat(Number*100)/100);
+}

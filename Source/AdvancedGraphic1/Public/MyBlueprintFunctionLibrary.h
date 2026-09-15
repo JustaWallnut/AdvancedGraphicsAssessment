@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "OreType.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "DamageInterface.h"
 #include "Components/ShapeComponent.h"
@@ -24,4 +25,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	static FVector2D GetRandomPosAlongRadius(float Radius, FVector Origin);
+	
+	UFUNCTION(BlueprintCallable)
+	static float CalculateTotalFromOres (TArray<UOreType*> Ores);
+	
+	UFUNCTION(BlueprintCallable)
+	static FString ConvertFloatToTwoDecimalsString(float Number);
 };

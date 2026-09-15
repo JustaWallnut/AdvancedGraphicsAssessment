@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
+#include "MyBlueprintFunctionLibrary.h"
 #include "MyInventoryWidget.generated.h"
 
 /**
@@ -22,8 +23,6 @@ public:
 	
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* WeightLimitText;
-	
-	static FString ConvertFloatToTwoDecimalsString(float Number);
 	
 	UFUNCTION(BlueprintCallable)
 	void UpdateWeight(float CurrentWeight, float MaxWeight);
