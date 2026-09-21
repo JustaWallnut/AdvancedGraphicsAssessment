@@ -51,4 +51,9 @@ void UAC_HealthComponent::CheckDamageStates()
 	
 }
 
+void UAC_HealthComponent::ReturnToFullHealth()
+{
+	CurrentHealth=MaxHealth;
+}
+
 

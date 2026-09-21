@@ -13,13 +13,14 @@ AOreDeposit::AOreDeposit()
 	SetRootComponent(OreDepositMesh);
 	
 	Health = CreateDefaultSubobject<UAC_HealthComponent>("Health");
-	Health->MaxHealth = OreHealth;
 }
 
 // Called when the game starts or when spawned
 void AOreDeposit::BeginPlay()
 {
 	Super::BeginPlay();
+	Health->MaxHealth = OreHealth;
+	Health->CurrentHealth = OreHealth;
 	if (!DepositOreType)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Ore Type is not set on %s!"), *GetName());
@@ -30,12 +31,11 @@ void AOreDeposit::TakeDamage_Implementation (float Damage)
 {
 	if (Health->TakeDamage(Damage))
 	{
-		Destroy();
+		Health->OnDeath.Broadcast();
 	}
-	
-	
 	if (Health->EnableDamageStates)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("CALL"));
 		Health->OnDamageStateCheck.Broadcast(Health->CurrentHealth);
 	}
 	

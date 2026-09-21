@@ -8,6 +8,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamageStateDelegate, float, NewHealth);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathDelegate);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ADVANCEDGRAPHIC1_API UAC_HealthComponent : public UActorComponent
 {
@@ -20,6 +22,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FDamageStateDelegate OnDamageStateCheck;
 	
+	UPROPERTY(BlueprintAssignable)
+	FDeathDelegate OnDeath;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Health")
 	float MaxHealth = 0.0f;
 	
@@ -27,10 +32,13 @@ public:
 	float CurrentHealth;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="DamageStates")
-	bool EnableDamageStates;
+	bool EnableDamageStates = false;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="DamageStates", meta=(EditCondition = "EnableDamageStates"))
-	TArray<float> DamageStatesThresholds;
+	TArray<float> DamageStateThresholds;
+	
+	UPROPERTY(BlueprintReadWrite, Category="DamageStates", meta=(EditCondition = "EnableDamageStates"))
+	TMap<float, bool> DamageThresholdChecks;
 
 protected:
 	// Called when the game starts
@@ -45,5 +53,7 @@ public:
 
     UFUNCTION(BlueprintCallable, meta=(ReturnDisplayName="isDead"))
     virtual bool TakeDamage(float Damage);
-		
+	
+	UFUNCTION(BlueprintCallable)
+	void ReturnToFullHealth();
 };
