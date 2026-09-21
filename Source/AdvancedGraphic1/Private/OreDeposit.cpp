@@ -11,6 +11,9 @@ AOreDeposit::AOreDeposit()
 	
 	OreDepositMesh = CreateDefaultSubobject<UStaticMeshComponent>("Body");
 	SetRootComponent(OreDepositMesh);
+	
+	Health = CreateDefaultSubobject<UAC_HealthComponent>("Health");
+	Health->MaxHealth = OreHealth;
 }
 
 // Called when the game starts or when spawned
@@ -25,25 +28,37 @@ void AOreDeposit::BeginPlay()
 
 void AOreDeposit::TakeDamage_Implementation (float Damage)
 {
-	float SpawnRadius = UKismetMathLibrary::RandomFloatInRange(MinSpawnRadius, MaxSpawnRadius);
-	FVector2D SpawnLocation2D = UMyBlueprintFunctionLibrary::GetRandomPosAlongRadius(SpawnRadius, GetActorLocation());
-	FVector SpawnLocation = FVector(SpawnLocation2D.X, SpawnLocation2D.Y, GetActorLocation().Z + 50);
-	FRotator SpawnRotation(FMath::RandRange(-180.0f, 180.0f), FMath::RandRange(-180.0f, 180.0f), FMath::RandRange(-180.0f, 180.0f));
-	FVector SpawnScale(1.0f, 1.0f, 1.0f);
-	FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
+	if (Health->TakeDamage(Damage))
+	{
+		Destroy();
+	}
 	
 	
-	ASpawnedOre* SpawnedOreChild = GetWorld()->SpawnActorDeferred<ASpawnedOre>(
-		ASpawnedOre::StaticClass(),
-		SpawnTransform,
-		this,
-		GetInstigator(),
-		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn,
-		ESpawnActorScaleMethod::SelectDefaultAtRuntime
-	);
+	if (Health->EnableDamageStates)
+	{
+		Health->OnDamageStateCheck.Broadcast(Health->CurrentHealth);
+	}
 	
-	SpawnedOreChild->AssignedOreType = DepositOreType;
-	SpawnedOreChild->FinishSpawning(SpawnTransform);
+	
+	// float SpawnRadius = UKismetMathLibrary::RandomFloatInRange(MinSpawnRadius, MaxSpawnRadius);
+	// FVector2D SpawnLocation2D = UMyBlueprintFunctionLibrary::GetRandomPosAlongRadius(SpawnRadius, GetActorLocation());
+	// FVector SpawnLocation = FVector(SpawnLocation2D.X, SpawnLocation2D.Y, GetActorLocation().Z + 50);
+	// FRotator SpawnRotation(FMath::RandRange(-180.0f, 180.0f), FMath::RandRange(-180.0f, 180.0f), FMath::RandRange(-180.0f, 180.0f));
+	// FVector SpawnScale(1.0f, 1.0f, 1.0f);
+	// FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
+	//
+	//
+	// ASpawnedOre* SpawnedOreChild = GetWorld()->SpawnActorDeferred<ASpawnedOre>(
+	// 	ASpawnedOre::StaticClass(),
+	// 	SpawnTransform,
+	// 	this,
+	// 	GetInstigator(),
+	// 	ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn,
+	// 	ESpawnActorScaleMethod::SelectDefaultAtRuntime
+	// );
+	//
+	// SpawnedOreChild->AssignedOreType = DepositOreType;
+	// SpawnedOreChild->FinishSpawning(SpawnTransform);
 }
 
 // Called every frame

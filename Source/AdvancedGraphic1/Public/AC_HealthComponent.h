@@ -6,25 +6,38 @@
 #include "Components/ActorComponent.h"
 #include "AC_HealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamageStateDelegate, float, NewHealth);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ADVANCEDGRAPHIC1_API UAC_HealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
+	
 public:	
 	// Sets default values for this component's properties
 	UAC_HealthComponent();
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(BlueprintAssignable)
+	FDamageStateDelegate OnDamageStateCheck;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Health")
 	float MaxHealth = 0.0f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Health")
 	float CurrentHealth;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="DamageStates")
+	bool EnableDamageStates;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="DamageStates", meta=(EditCondition = "EnableDamageStates"))
+	TArray<float> DamageStatesThresholds;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
+	UFUNCTION()
+	void CheckDamageStates();
 
 public:	
 	// Called every frame

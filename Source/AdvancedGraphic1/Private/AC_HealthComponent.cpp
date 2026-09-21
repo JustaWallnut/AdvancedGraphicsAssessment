@@ -46,3 +46,9 @@ void UAC_HealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
+void UAC_HealthComponent::CheckDamageStates()
+{
+	
+}
+
+

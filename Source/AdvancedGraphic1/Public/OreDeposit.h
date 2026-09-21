@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "DamageInterface.h"
+#include "AC_HealthComponent.h"
 #include "OreType.h"
 #include "SpawnedOre.h"
 #include "MyBlueprintFunctionLibrary.h"
@@ -30,6 +31,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float OreHealth;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UOreType* DepositOreType;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -41,4 +45,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
 	UStaticMeshComponent* OreDepositMesh;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess=true))
+	UAC_HealthComponent* Health;
 };
