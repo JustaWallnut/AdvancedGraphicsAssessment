@@ -31,5 +31,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, meta=(ReturnDisplayName="Success"))
 	bool UpgradeSpeed(float Strength, float Cost);
 	
-	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, meta=(ReturnDisplayName="Success"))
+	bool PurchaseDynamite(float Cost);
 };

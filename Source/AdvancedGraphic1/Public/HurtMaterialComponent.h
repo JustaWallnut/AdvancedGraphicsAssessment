@@ -22,6 +22,18 @@ public:
 	UPROPERTY()
 	UMaterialInstanceDynamic* DynamicMaterial;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Dissolve Effect")
+	bool EnableDissolveFX;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Dissolve Effect", meta=(EditCondition="EnableDissolveFX"))
+	FName DissolveStartTimeParam;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Dissolve Effect", meta=(EditCondition="EnableDissolveFX"))
+	FName DissolveDurationParam;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Dissolve Effect", meta=(EditCondition="EnableDissolveFX"))
+	FName DissolveStrengthParam;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hurt Effect")
 	bool EnableHurtEffect;
 	
@@ -49,11 +61,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int TargetMaterialIndex;
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void StartHurtLogic();
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void StartDamageStateLogic(float FProgress);
+	
+	UFUNCTION(BlueprintCallable)
+	void StartDissolveLogic(float Duration, float Strength);
 	
 protected:
 	// Called when the game starts

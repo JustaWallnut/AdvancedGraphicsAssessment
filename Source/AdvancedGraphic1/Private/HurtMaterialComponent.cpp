@@ -71,6 +71,17 @@ void UHurtMaterialComponent::StartDamageStateLogic(float FProgress)
 	}
 }
 
+void UHurtMaterialComponent::StartDissolveLogic(float Duration, float Strength)
+{
+	if (DynamicMaterial)
+	{
+		float CurrentTime = GetWorld()->GetTimeSeconds();
+		DynamicMaterial->SetScalarParameterValue(DissolveStartTimeParam, CurrentTime);
+		DynamicMaterial->SetScalarParameterValue(DissolveStrengthParam, Strength);
+		DynamicMaterial->SetScalarParameterValue(DissolveDurationParam, Duration);
+	}
+}
+
 // Called every frame
 void UHurtMaterialComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
