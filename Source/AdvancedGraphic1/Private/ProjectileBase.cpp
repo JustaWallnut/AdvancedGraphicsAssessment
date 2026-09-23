@@ -9,13 +9,13 @@ AProjectileBase::AProjectileBase()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	ProjectileCollision = CreateDefaultSubobject<USphereComponent>("ProjectileCollision");
-	ProjectileCollision->SetCollisionProfileName("DynamicBlockAll");
+	ProjectileCollision = CreateDefaultSubobject<UBoxComponent>("ProjCollision");
+	ProjectileCollision->SetCollisionProfileName("ThrownProjectile");
 	SetRootComponent(ProjectileCollision);
 	
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>("ProjectileMesh");
-	ProjectileMesh->SetCollisionProfileName("DynamicBlockAll");
-	ProjectileMesh->SetupAttachment(RootComponent);
+	ProjectileMesh->SetCollisionProfileName("ThrownProjectile");
+	ProjectileMesh->SetupAttachment(ProjectileCollision);
 	
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovement");
 	ProjectileMovement->SetUpdatedComponent(RootComponent);
@@ -24,7 +24,7 @@ AProjectileBase::AProjectileBase()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = false;
 	ProjectileMovement->Bounciness = 0.0f;
-	ProjectileMovement->ProjectileGravityScale = 0.0f;
+	ProjectileMovement->ProjectileGravityScale = 0.5f;
 }
 
 // Called when the game starts or when spawned
@@ -34,9 +34,11 @@ void AProjectileBase::BeginPlay()
 	
 }
 
-void AProjectileBase::FireProjectile(FVector Direction)
+void AProjectileBase::FireProjectile(const FVector Direction, const FVector AngleImpulse, const float SpinPower)
 {
-	ProjectileMovement->Velocity = Direction * ProjectileMovement->InitialSpeed;
+	FVector NewVelocity = Direction * ProjectileMovement->InitialSpeed;
+	ProjectileMovement->Velocity = NewVelocity;
+	ProjectileCollision->AddAngularImpulseInDegrees((AngleImpulse*SpinPower), NAME_None, false);
 }
 
 
