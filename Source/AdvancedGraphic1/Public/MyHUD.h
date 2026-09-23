@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "MyInventoryWidget.h"
 #include "MoneyCounterWidget.h"
+#include "ItemCounterWidgetBase.h"
 #include "MyHUD.generated.h"
 
 /**
@@ -28,6 +29,12 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UUserWidget> MoneyCounterUI;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UItemCounterWidgetBase> ItemCounterWidgetClass;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UUserWidget> DynamiteCounterUI;
 	
 protected:
 	virtual void BeginPlay() override;

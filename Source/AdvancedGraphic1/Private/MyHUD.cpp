@@ -9,8 +9,10 @@ void AMyHUD::BeginPlay()
 	APlayerController* PC = Cast<APlayerController>(GetOwner());
 	InventoryUI = CreateWidget<UUserWidget>(PC, InventoryWidgetClass);
 	MoneyCounterUI = CreateWidget<UUserWidget>(PC, MoneyCounterWidgetClass);
+	DynamiteCounterUI = CreateWidget<UUserWidget>(PC, ItemCounterWidgetClass);
 	
 	InventoryUI->AddToPlayerScreen();
 	MoneyCounterUI->AddToPlayerScreen();
+	DynamiteCounterUI->AddToPlayerScreen();
 }
 
