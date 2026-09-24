@@ -82,6 +82,18 @@ void UHurtMaterialComponent::StartDissolveLogic(float Duration, float Strength)
 	}
 }
 
+void UHurtMaterialComponent::StartColorPulseLogic(FLinearColor PulseColor, float Duration)
+{
+	if (DynamicMaterial)
+	{
+		float CurrentTime = GetWorld()->GetTimeSeconds();
+		FVector VectorColor = FVector(PulseColor.R, PulseColor.G, PulseColor.B);
+		DynamicMaterial->SetScalarParameterValue(PulseStartTimeParam, CurrentTime);
+		DynamicMaterial->SetScalarParameterValue(PulseDurationParam, Duration);
+		DynamicMaterial->SetVectorParameterValue(PulseColorParam, VectorColor);
+	}
+}
+
 // Called every frame
 void UHurtMaterialComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {

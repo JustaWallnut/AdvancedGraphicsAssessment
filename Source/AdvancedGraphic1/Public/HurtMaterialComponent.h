@@ -57,6 +57,21 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category="DamageState Effect", meta=(EditCondition = "EnableDamageStates"))
 	FName ProgressParam;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pulse Effect")
+	bool EnableColorPulse;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Pulse Effect", meta=(EditCondition = "EnableColorPulse"))
+	FName PulseColorParam;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Pulse Effect", meta=(EditCondition = "EnableColorPulse"))
+	FName PulseDurationParam; 
+	
+	UPROPERTY(EditDefaultsOnly, Category="Pulse Effect", meta=(EditCondition = "EnableColorPulse"))
+	FName PulseStartTimeParam;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Pulse Effect", meta=(EditCondition = "EnableColorPulse"))
+	FName PulseStrengthParam;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int TargetMaterialIndex;
@@ -66,6 +81,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void StartDamageStateLogic(float FProgress);
+	
+	UFUNCTION(BlueprintCallable)
+	void StartColorPulseLogic(FLinearColor PulseColor, float Duration);
 	
 	UFUNCTION(BlueprintCallable)
 	void StartDissolveLogic(float Duration, float Strength);
